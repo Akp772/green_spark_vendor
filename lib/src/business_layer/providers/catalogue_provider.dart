@@ -2,25 +2,26 @@ import 'package:green_spark_vendor/src/business_layer/localization/translations.
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/base_provider.dart';
-import 'package:green_spark_vendor/src/business_layer/repository/home_repository.dart';
+import 'package:green_spark_vendor/src/business_layer/repository/catalogue_repository.dart';
+import 'package:green_spark_vendor/src/data_layer/models/catalogue_models/add_attribute_request_model.dart';
+import 'package:green_spark_vendor/src/data_layer/models/catalogue_models/add_attribute_response_model.dart';
+import 'package:green_spark_vendor/src/data_layer/models/catalogue_models/all_attribute_response_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/home_models/all_product_list_response_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/home_models/category_list_response_model.dart';
-import 'package:green_spark_vendor/src/data_layer/models/home_models/single_product_response_model.dart';
-import 'package:green_spark_vendor/src/data_layer/models/home_models/trading_list_response_model.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/catalogue_screens/add_attribute.dart';
 
-class HomeProvider extends BaseProvider{
+class CatalogueProvider extends BaseProvider {
 
-  final HomeRepository _homeRepository = HomeRepository();
-  CategoryResponseModel? categoryResponseModel;
-  TradingResponseModel? tradingResponseModel;
-  SingleProductResponseModel? singleProductResponseModel;
+  final CatalogueRepository _catalogueRepository = CatalogueRepository();
+  AllProductsResponseModel? allProductsResponseModel;
+  AllAttributeResponseModel? allAttributeResponseModel;
 
-  Future<String?> getAllCategory() async {
+  Future<String?> getAllProducts() async {
     if (await checkInternet()) {
-      var response = await _homeRepository.getAllCategory();
-      if (response is CategoryResponseModel) {
+      var response = await _catalogueRepository.getAllProducts();
+      if (response is AllProductsResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
-          categoryResponseModel = response;
+          allProductsResponseModel = response;
           notifyListeners();
           return HttpResponseType.success;
         }else{
@@ -34,12 +35,12 @@ class HomeProvider extends BaseProvider{
     }
   }
 
-  Future<String?> getAddToCartList() async {
+  Future<String?> getAllAttribute() async {
     if (await checkInternet()) {
-      var response = await _homeRepository.getAddToCartList();
-      if (response is CategoryResponseModel) {
+      var response = await _catalogueRepository.getAllAttribute();
+      if (response is AllAttributeResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
-          categoryResponseModel = response;
+          allAttributeResponseModel = response;
           notifyListeners();
           return HttpResponseType.success;
         }else{
@@ -53,16 +54,14 @@ class HomeProvider extends BaseProvider{
     }
   }
 
-  Future<String?> getAddToWishList() async {
+  Future<String?> addAllAttribute(AddAttributeRequestModel value) async {
     if (await checkInternet()) {
-      var response = await _homeRepository.getAddToWishList();
-      if (response is CategoryResponseModel) {
+      var response = await _catalogueRepository.addAllAttribute(value);
+      if (response is AddAttributeResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
-          categoryResponseModel = response;
-          notifyListeners();
           return HttpResponseType.success;
         }else{
-          return "Something went wrong";
+          return response.message ?? "Something went wrong";
         }
       } else {
         return getExceptionMessage(exceptionType: response.exceptionType);
@@ -72,16 +71,14 @@ class HomeProvider extends BaseProvider{
     }
   }
 
-  Future<String?> getSingleProductDetails(id) async {
+  Future<String?> deleteAllAttribute(value) async {
     if (await checkInternet()) {
-      var response = await _homeRepository.getSingleProductDetails(id);
-      if (response is SingleProductResponseModel) {
+      var response = await _catalogueRepository.deleteAllAttribute(value);
+      if (response is AddAttributeResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
-          singleProductResponseModel = response;
-          notifyListeners();
           return HttpResponseType.success;
         }else{
-          return "Something went wrong";
+          return response.message ?? "Something went wrong";
         }
       } else {
         return getExceptionMessage(exceptionType: response.exceptionType);
@@ -91,23 +88,5 @@ class HomeProvider extends BaseProvider{
     }
   }
 
-  Future<String?> getAllTrading() async {
-    if (await checkInternet()) {
-      var response = await _homeRepository.getAllTrading();
-      if (response is TradingResponseModel) {
-        if(true) {
-          tradingResponseModel = response;
-          notifyListeners();
-          return HttpResponseType.success;
-        }else{
-          return "Something went wrong";
-        }
-      } else {
-        return getExceptionMessage(exceptionType: response.exceptionType);
-      }
-    } else {
-      return AppLocalizations.current.getSocketExceptionMessage;
-    }
-  }
 
 }

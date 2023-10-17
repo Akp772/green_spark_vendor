@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:green_spark_vendor/src/business_layer/util/helper/device_info_helper.dart';
+import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigation_helper.dart';
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/cart_screen/added_to_cart_list_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/orders_screen/order_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/stocks_screen/total_stock_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/wishlist_screen/wishlist_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/bottom_nav_bar_widget.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/text_widget_helper.dart';
+
+import '../catalogue_screens/catalogue_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +22,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  List<String> optionsList = ['Catalogue', 'Orders','Stocks','Support','Reports',
+    'Settings','Added to cart','Added to wishlist','Coupons','Shipping','Cancellation',
+    'Customers','Messages ','Disputes','Reviews'];
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.appMainColor,
         elevation: 0,
+        leading: const SizedBox(),
         title: const PoppinsSemiBoldText(text: "Vendor Name",fontSize: 16,color: AppColors.whiteColor,),
         actions: [
           IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_none,color: AppColors.whiteColor,))
@@ -29,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       backgroundColor: AppColors.lightGreyColor,
       body: _mainWidget(context),
-      bottomNavigationBar: BottomNavBarWidget(),
+      bottomNavigationBar: const BottomNavBarWidget(),
     );
   }
 
@@ -39,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               _topProductDetailsWidget(),
-              _storeListingWidget(),
+              // _storeListingWidget(),
               _moreSectionWidget(),
               _topSellingWidget()
             ],
@@ -109,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: AppStyles.pd15,
             color: AppColors.whiteColor,
             child: GridView.builder(
-                itemCount: 6,
+                itemCount: optionsList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -118,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisSpacing: 12.0,
                     mainAxisSpacing: 15.0),
                 itemBuilder: (context, index){
-                  return _commonStoreItemWidget();
+                  return _commonStoreItemWidget(index);
                 }
              ),
           )
@@ -137,28 +148,55 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppStyles.sbHeight5,
-          const PoppinsSemiBoldText(text: "More Options", fontSize: 16,color: AppColors.textGreyColor,),
+          const PoppinsSemiBoldText(text: "Options", fontSize: 16,color: AppColors.textGreyColor,),
           AppStyles.sbHeight10,
           Container(
             padding: AppStyles.pd15,
             color: AppColors.whiteColor,
             child: GridView.builder(
-                itemCount: 8,
+                itemCount: optionsList.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 1,
+                    childAspectRatio: 0.9,
                     crossAxisCount: 3,
                     crossAxisSpacing: 12.0,
                     mainAxisSpacing: 15.0),
                 itemBuilder: (context, index){
-                  return _commonStoreItemWidget();
+                  return InkWell(
+                      onTap: (){
+                        _navigate(index);
+                      },
+                      child: _commonStoreItemWidget(index));
                 }
              ),
           )
         ]
       ),
     );
+  }
+
+  void _navigate(int index){
+    if(index == 0){
+     Navigator.push(context, ScreenNavigation.createRoute(widget: const CatalogueScreen()));
+    }else if(index == 1){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const OrderScreen()));
+    }else if(index == 2){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const TotalStockScreen()));
+    }else if(index == 6){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const AddedToCartListScreen()));
+    }else if(index == 7){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const AddedToWishListScreen()));
+    }
+  }
+
+
+  List<Widget> _iconsList(){
+    return [AppImages.catalogIcon,AppImages.orderIcon,AppImages.stocks,
+      AppImages.supportIcon,AppImages.report,AppImages.settingIcon,
+      AppImages.catalogIcon,AppImages.catalogIcon,AppImages.coupons,
+      AppImages.shipping,AppImages.cancelationIcon,AppImages.groupUserIcon,
+    AppImages.message,AppImages.disputeIcon,AppImages.reviews,];
   }
 
   Widget _topSellingWidget(){
@@ -211,17 +249,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _commonStoreItemWidget() {
+  Widget _commonStoreItemWidget(int index) {
     return Column(
       children: [
-        _commonRoundedWidget(),
+        _commonRoundedWidget(index),
         AppStyles.sbHeight10,
-        const PoppinsSemiBoldText(text: "Unfulfilled items", fontSize: 14,color: AppColors.textGreyColor,textAlign: TextAlign.center,),
+        PoppinsSemiBoldText(text: optionsList[index], fontSize: 14,color: AppColors.textGreyColor,textAlign: TextAlign.center,),
       ],
     );
   }
 
-  Widget _commonRoundedWidget(){
+  Widget _commonRoundedWidget(int index){
     return Container(
       height: 65,width: 65,
       padding: AppStyles.pd10,
@@ -229,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: AppColors.appMainColor,
         borderRadius: BorderRadius.circular(50)
       ),
-      child: AppImages.orderIcon,
+      child: _iconsList()[index],
     );
   }
 

@@ -1,7 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:green_spark_vendor/src/data_layer/models/auth_models/sign_up_request_model.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/auth_screens/sign_in_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/home_screens/home_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/other_screens/shop_details_form_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/common_component/app_logo_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:green_spark_vendor/src/app.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
@@ -32,7 +40,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   RegistrationProvider? _registrationProvider;
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailOrPhoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _shopController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool showPass = true;
@@ -42,6 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String lastNameErr = "";
   String confirmPasswordErr = "";
   String passwordErr = "";
+  String shopErr = "";
+  String phoneErr = "";
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: AppColors.appMainColor,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: AppImages.backIcon,
-            ),
+        leading: const SizedBox(),
         title: const PoppinsBoldText(text: 'Sign Up',color: AppColors.whiteColor, fontSize: 18,),
       ),
       body: SafeArea(child: _mainWidget(),),
@@ -70,23 +79,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
           physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
-              AppStyles.sbHeight40,
-              _commonLabelAndTextFieldWidget("First Name",_firstNameController,"Enter your first name",i_0,(value){
+              const AppLogoWidget(isWhite: false,),
+              AppStyles.sbHeight30,
+              // _commonLabelAndTextFieldWidget("First Name",_firstNameController,"Enter your first name",i_0,(value){
+              // },keyboardType: TextInputType.name,formatter: FilterFormatter.nameFieldFormatter,maxLen: 20,errText: firstNameErr),
+              AppStyles.sbHeight30,
+              _commonLabelAndTextFieldWidget("Name",_firstNameController,"Enter your name ",i_1,(value){
               },keyboardType: TextInputType.name,formatter: FilterFormatter.nameFieldFormatter,maxLen: 20,errText: firstNameErr),
               AppStyles.sbHeight30,
-              _commonLabelAndTextFieldWidget("Last Name",_lastNameController,"Enter your last name ",i_1,(value){
-              },keyboardType: TextInputType.name,formatter: FilterFormatter.nameFieldFormatter,maxLen: 20,errText: lastNameErr),
-              AppStyles.sbHeight30,
-              _commonLabelAndTextFieldWidget("E-Mail ID or Phone Number",_emailOrPhoneController,"Enter your mail ID or phone number",i_2,(value){
+              _commonLabelAndTextFieldWidget("E-Mail ID ",_emailController,"Enter your mail ID",i_2,(value){
               },keyboardType: TextInputType.emailAddress,maxLen: 20,errText: emailOrPhoneErr),
+              AppStyles.sbHeight30,
+              _commonLabelAndTextFieldWidget("Phone Number",_phoneController,"Enter your phone number",i_2,(value){
+              },keyboardType: TextInputType.number,maxLen: 10,errText: phoneErr),
               AppStyles.sbHeight30,
               _commonLabelAndTextFieldWidget("Password",_confirmPasswordController,"Enter password",i_3,(value){
               },keyboardType: TextInputType.text,formatter: FilterFormatter.passwordFieldFormatter,maxLen: 20,errText: passwordErr,obscureText: showPass,suffixIcon: showPass? AppImages.openEyeIcon:AppImages.closeEyeIcon),
               AppStyles.sbHeight30,
               _commonLabelAndTextFieldWidget("Confirm Password",_passwordController,"Re enter password",i_4,(value){
               },keyboardType: TextInputType.text,formatter: FilterFormatter.passwordFieldFormatter,maxLen: 20,errText: confirmPasswordErr,obscureText: showConfirmPass,suffixIcon: showConfirmPass? AppImages.openEyeIcon:AppImages.closeEyeIcon),
+              AppStyles.sbHeight30,
+              _commonLabelAndTextFieldWidget("Shop Name",_shopController,"Enter Shop Name",i_4,(value){
+              },keyboardType: TextInputType.text,formatter: FilterFormatter.propertyNameFieldFormatter,maxLen: 20,errText: shopErr,),
               AppStyles.sbHeight55,
-              _buttonWidget()
+              _buttonWidget(),
+              AppStyles.sbHeight30,
+              _bottomTextWidget()
             ],
           ),
         ),
@@ -94,10 +112,77 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _checkValidation(){
+  Widget _bottomTextWidget(){
+    return  RichText(
+      text:   TextSpan(
+        children: [
+          const TextSpan(
+            text: "Already have an account? ",
+            style: TextStyle(
+              color: AppColors.textColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+            ),
+          ),
+          TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap=(){
+                  navigatorKey.currentState!.pushReplacement(ScreenNavigation.createRoute(widget: const SignInScreen()));
+                },
+              text: 'Sign In', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w700,)),
+        ],
+      ),
+    );
+  }
 
+
+  void _checkValidation(){
+    if(_firstNameController.text.isEmpty){
+      firstNameErr = "This field is required";
+    }else{
+      firstNameErr = "";
+    }
+    // if(_lastNameController.text.isEmpty){
+    //   lastNameErr = "This field is required";
+    // }else{
+    //   lastNameErr = "";
+    // }
+    if(_shopController.text.isEmpty){
+      shopErr = "This field is required";
+    }else{
+      shopErr = "";
+    }
+    if(_phoneController.text.length != 10 && _phoneController.text.isNotEmpty){
+      phoneErr = "Please enter a valid phone number";
+    }else if(_phoneController.text.isEmpty){
+      phoneErr = "This field is required";
+    }else{
+      phoneErr = "";
+    }
+    if(_passwordController.text.isEmpty){
+      passwordErr = "This field is required";
+    }else if(_passwordController.text.length <5){
+      passwordErr = "Password should be minimum 6 characters";
+    }else{
+      passwordErr = "";
+    }
+    if(_passwordController.text.isNotEmpty && _passwordController.text.length >= 6 && _passwordController.text != _confirmPasswordController.text){
+      confirmPasswordErr = "Password does not match";
+    }else if(_confirmPasswordController.text.isEmpty){
+      confirmPasswordErr = "This field is required";
+    }else{
+      confirmPasswordErr = "";
+    }
+    if(_emailController.text.isEmpty ){
+      emailOrPhoneErr = "This field is required";
+    }else if(_emailController.text.isNotEmpty && !AppRegex.emailRegex.hasMatch(_emailController.text)){
+      emailOrPhoneErr = "Please enter a valid email address";
+    }else{
+      emailOrPhoneErr = "";
+    }
     setState(() {});
   }
+
 
   Widget _commonLabelAndTextFieldWidget(String labelText,TextEditingController controller,String hintText,int type,Function(String) onChange,
       {TextInputType keyboardType = TextInputType.text,List<TextInputFormatter>? formatter,int maxLen = 50,Widget? suffixIcon,bool obscureText = false,String errText= ""}){
@@ -146,48 +231,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buttonWidget(){
     return CommonAppButton(text: "Register", onTap: (){
       _checkValidation();
-      // if(emailErr.isEmpty && phoneErr.isEmpty && passwordErr.isEmpty) {
+      if(emailOrPhoneErr.isEmpty && phoneErr.isEmpty && passwordErr.isEmpty && lastNameErr.isEmpty && shopErr.isEmpty
+          && confirmPasswordErr.isEmpty && firstNameErr.isEmpty) {
+        // navigatorKey.currentState!.pushReplacement(ScreenNavigation.createRoute(
+        //     widget:  const ShopDetailWidget()));
         _handleTap();
-      // }
-    });
+      }
+      }
+    );
   }
 
   void _handleTap() async{
-    // Loader.display(context);
-    // String? res = await _registrationProvider!.signUp(email: _emailOrPhoneController.text, password: _passwordController.text, mobileNumber: _phoneNumberController.text);
-    // Loader.close(context);
-    // if(res == HttpResponseType.success){
+    Loader.display(context);
+    String? res = await _registrationProvider!.signUp(_setRequest());
+    Loader.close(context);
+    if(res == HttpResponseType.success){
       _onSuccess();
-    // }else{
-    //   FlutterToastHelper.showToast(res??"");
-    // }
+    }else{
+      FlutterToastHelper.showToast(res??"");
+    }
+  }
+
+   SignUpRequestModel _setRequest(){
+    SignUpRequestModel signUpRequestModel = SignUpRequestModel()
+        ..email = _emailController.text
+        ..shopName = _shopController.text
+        ..mobileNumber = int.parse(_phoneController.text)
+        ..password = _passwordController.text
+        ..name = _firstNameController.text
+        ..countryCode = "+91"
+        ..passwordConfirmation = _confirmPasswordController.text;
+    return signUpRequestModel;
+
   }
 
   void _onSuccess(){
-    navigatorKey.currentState!.push(ScreenNavigation.createRoute(
-        widget:  OTPVerificationScreen(onResend: () async{
-          Loader.display(context);
-          String? res = await _registrationProvider!.sendOTP(email: _emailOrPhoneController.text, type: 'account__verify');
-          Loader.close(context);
-          if(res == HttpResponseType.success){
-            FlutterToastHelper.showToast("OTP resend successfully");
-          }
-        }, onSubmit: (String otp) {
-          _handleVerifyOtp(otp);
-        },)));
-  }
-
-  void _handleVerifyOtp(String otp) async{
-    // Loader.display(context);
-    // String? res = await _registrationProvider!.verifyOTP(email: _emailOrPhoneController.text,otp: otp);
-    // Loader.close(context);
-    // if(res == HttpResponseType.success){
-      navigatorKey.currentState!.pop();
-      navigatorKey.currentState!.pushReplacement(ScreenNavigation.createRoute(
-          widget:  const SignUPSuccessScreen())
-      );
-    // }else{
-    //   FlutterToastHelper.showToast(res??"");
-    // }
+    Navigator.pushAndRemoveUntil(context, ScreenNavigation.createRoute(widget: const HomeScreen()), (route) => false);
   }
 }

@@ -38,21 +38,21 @@ class DrawerWidget extends StatelessWidget {
                ),
              ),
             _divider(),
-            _listTileItem(AppImages.callRingIcon, "Contact Us",(){
-
-            }),
-            _divider(),
-            _listTileItem(AppImages.termsAndConditions, "Terms & Conditions",(){
-            }),
-            _divider(),
-            _listTileItem(AppImages.privacyIcon, "Privacy Policy",(){
-            }),
-            _divider(),
-            _listTileItem(AppImages.aboutUs, "About Us",(){
-            }),
-            _divider(),
-            _listTileItem(AppImages.posterIcon, "Advertising",(){
-            }),
+            // _listTileItem(AppImages.callRingIcon, "Contact Us",(){
+            //
+            // }),
+            // _divider(),
+            // _listTileItem(AppImages.termsAndConditions, "Terms & Conditions",(){
+            // }),
+            // _divider(),
+            // _listTileItem(AppImages.privacyIcon, "Privacy Policy",(){
+            // }),
+            // _divider(),
+            // _listTileItem(AppImages.aboutUs, "About Us",(){
+            // }),
+            // _divider(),
+            // _listTileItem(AppImages.posterIcon, "Advertising",(){
+            // }),
           ],
         ),
       ),

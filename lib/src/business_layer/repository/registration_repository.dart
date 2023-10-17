@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:green_spark_vendor/src/business_layer/network/api_constants.dart';
 import 'package:green_spark_vendor/src/business_layer/network/app_network.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
 import 'package:green_spark_vendor/src/business_layer/util/helper/log_helper.dart';
+import 'package:green_spark_vendor/src/data_layer/models/auth_models/SocialLoginRequestModel.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/change_password_request_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/forgot_password_request_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/forgot_password_response_model.dart';
@@ -23,18 +25,13 @@ class RegistrationRepository {
   Map<String, dynamic>? _responseBody;
 
   /// login api
-  Future<dynamic> login(
-      String? userId,String password,
-      ) async {
+  Future<dynamic> login(SignInRequestModel setLoginRequest) async {
     try {
       BaseApiResponseModel response = await AppNetwork().request(
         url: ApiConstant.signIn,
         requestType: HttpRequestMethods.post,
-        request: {
-          "user_id": userId,
-          "password": password
-        },
-        headerIncluded: false,
+        request: setLoginRequest,
+        headerIncluded: true,
       );
 
       LogHelper.logData(_tag + response.data.toString());
@@ -112,21 +109,13 @@ class RegistrationRepository {
   }
 
 
-  Future<dynamic> signUp(
-  {required String email,required String password,required String mobileNumber}
+  Future<dynamic> signUp(SignUpRequestModel setRequest
       ) async {
     try {
       BaseApiResponseModel response = await AppNetwork().request(
         url: ApiConstant.signUp,
         requestType: HttpRequestMethods.post,
-        request: mobileNumber.isEmpty ? {
-          "email": email,
-          "password": password
-        } : {
-          "email": email,
-          "password": password,
-          "phone_no": mobileNumber
-        },
+        request: setRequest,
         headerIncluded: true,
       );
 

@@ -1,66 +1,72 @@
 class SignUpResponseModel {
-  String? responseCode;
   int? httpStatusCode;
+  bool? status;
   Context? context;
   String? timestamp;
+  String? message;
 
   SignUpResponseModel(
-      {this.responseCode, this.httpStatusCode, this.context, this.timestamp});
+      {this.httpStatusCode,
+        this.status,
+        this.context,
+        this.timestamp,
+        this.message});
 
   SignUpResponseModel.fromJson(Map<String, dynamic> json) {
-    responseCode = json['response_code'];
     httpStatusCode = json['http_status_code'];
+    status = json['status'];
     context =
     json['context'] != null ? Context.fromJson(json['context']) : null;
     timestamp = json['timestamp'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['response_code'] = responseCode;
-    data['http_status_code'] = httpStatusCode;
-    if (context != null) {
-      data['context'] = context!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['http_status_code'] = this.httpStatusCode;
+    data['status'] = this.status;
+    if (this.context != null) {
+      data['context'] = this.context!.toJson();
     }
-    data['timestamp'] = timestamp;
+    data['timestamp'] = this.timestamp;
+    data['message'] = this.message;
     return data;
   }
 }
 
 class Context {
-  Success? success;
-  String? message;
+  Data? data;
 
-  Context({this.success, this.message});
+  Context({this.data});
 
   Context.fromJson(Map<String, dynamic> json) {
-    success =
-    json['success'] != null ? Success.fromJson(json['success']) : null;
-    message = json['message'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (success != null) {
-      data['success'] = success!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
     return data;
   }
 }
 
-class Success {
-  String? info;
+class Data {
+  String? token;
+  String? name;
 
-  Success({this.info});
+  Data({this.token, this.name});
 
-  Success.fromJson(Map<String, dynamic> json) {
-    info = json['info'];
+  Data.fromJson(Map<String, dynamic> json) {
+    token = json['token'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['info'] = info;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['token'] = this.token;
+    data['name'] = this.name;
     return data;
   }
 }

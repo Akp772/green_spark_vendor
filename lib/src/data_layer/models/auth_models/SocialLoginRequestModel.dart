@@ -1,67 +1,36 @@
-class SocialLoginRequestModel {
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  String? socialId, errorMessage;
-  String loginType;
-  String deviceToken;
-  bool hasData;
-  bool? isPrivacyAccepted, isPreEmail;
-  int? number;
+class SignInRequestModel {
+  String? userId;
+  String? password;
+  String? authProvider;
+  String? deviceId;
+  String? deviceType;
+  String? fcmToken;
 
-  SocialLoginRequestModel(
-      {this.email,
-      required this.deviceToken,
-      this.firstName,
-      this.lastName,
-      required this.loginType,
-      this.phone,
-      this.socialId,
-      required this.hasData,
-      this.errorMessage,
-      this.isPreEmail,
-      this.number,
-      this.isPrivacyAccepted});
+  SignInRequestModel(
+      {this.userId,
+        this.password,
+        this.authProvider,
+        this.deviceId,
+        this.deviceType,
+        this.fcmToken});
 
-  Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{};
-    map["firstName"] = firstName;
-    if (lastName != null && lastName!.trim().isNotEmpty) {
-      map["lastName"] = lastName;
-    }
-    if (email != null && email!.isNotEmpty) {
-      map["email"] = email;
-    }
-    map["phone"] = phone;
-    map["socialId"] = socialId;
-    map["login_type"] = loginType;
-    map['device_token'] = deviceToken;
-    map['socialType'] = loginType;
-    map['newsLetter'] = isPrivacyAccepted ?? false;
-    map['isPreEmail'] = isPreEmail;
-    // map["deviceToken"] = AppConstant.FireBaseToken;
-    // map["deviceType"] = AppInfo.getDeviceTypeAsNumber();
-    return map;
+  SignInRequestModel.fromJson(Map<String, dynamic> json) {
+    userId = json['user_id'];
+    password = json['password'];
+    authProvider = json['auth_provider'];
+    deviceId = json['device_id'];
+    deviceType = json['device_type'];
+    fcmToken = json['fcm_token'];
   }
-}
 
-class FacebookUser {
-  String? name, firstName, lastName, email, id, additionalInfo;
-
-  FacebookUser(
-      {this.lastName,
-      this.firstName,
-      this.email,
-      this.id,
-      this.name,
-      this.additionalInfo});
-
-  FacebookUser.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    email = json['email'];
-    id = json['id'];
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_id'] = this.userId;
+    data['password'] = this.password;
+    data['auth_provider'] = this.authProvider;
+    data['device_id'] = this.deviceId;
+    data['device_type'] = this.deviceType;
+    data['fcm_token'] = this.fcmToken;
+    return data;
   }
 }

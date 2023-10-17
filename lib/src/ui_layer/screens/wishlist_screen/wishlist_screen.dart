@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:green_spark_vendor/src/app.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/home_provider.dart';
-import 'package:green_spark_vendor/src/business_layer/providers/stocks_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigation_helper.dart';
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
@@ -12,14 +11,14 @@ import 'package:green_spark_vendor/src/ui_layer/widgets/table_widgets/common_tab
 import 'package:green_spark_vendor/src/ui_layer/widgets/text_widget_helper.dart';
 import 'package:provider/provider.dart';
 
-class AddedToCartListScreen extends StatefulWidget {
-  const AddedToCartListScreen({Key? key}) : super(key: key);
+class AddedToWishListScreen extends StatefulWidget {
+  const AddedToWishListScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddedToCartListScreen> createState() => _AddedToCartListScreenState();
+  State<AddedToWishListScreen> createState() => _AddedToWishListScreenState();
 }
 
-class _AddedToCartListScreenState extends State<AddedToCartListScreen> {
+class _AddedToWishListScreenState extends State<AddedToWishListScreen> {
 
 
   HomeProvider? _homeProvider;
@@ -33,10 +32,9 @@ class _AddedToCartListScreenState extends State<AddedToCartListScreen> {
   void _getStocksWithoutVariant(){
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _homeProvider = Provider.of<HomeProvider>(context,listen: false);
-      _homeProvider!.getAddToCartList();
+      _homeProvider!.getAddToWishList();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,30 +51,25 @@ class _AddedToCartListScreenState extends State<AddedToCartListScreen> {
         ),
         centerTitle: true,
         elevation: 0,
-        title: const PoppinsMediumText(text: "Items Added To Cart",fontSize: 18,color: AppColors.whiteColor,),
+        title: const PoppinsMediumText(text: "Items Added To Wishlist",fontSize: 18,color: AppColors.whiteColor,),
       ),
       body: _mainWidget(context),
     );
   }
 
   Widget _mainWidget(BuildContext context) {
-    return SafeArea(
-        child: Column(
-          children: [
-            // const Padding(
-            //   padding: AppStyles.pd20,
-            //   child: PoppinsMediumText(text: "Items Added To Cart", fontSize: 18,color: AppColors.textColor,),
-            // ),
-            AppStyles.sbHeight10,
-            _commonContainer(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context,index)=> _listWidget(),
-                  separatorBuilder: (context,index)=> AppStyles.sbHeight5,
-                  itemCount: 5),
-            )
+    return SafeArea(child: Column(
+      children: [
+        AppStyles.sbHeight10,
+        _commonContainer(
+          child: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context,index)=> _listWidget(),
+              separatorBuilder: (context,index)=> AppStyles.sbHeight5,
+              itemCount: 5),
+        )
 
-          ],
+      ],
     ));
   }
 
@@ -97,9 +90,9 @@ class _AddedToCartListScreenState extends State<AddedToCartListScreen> {
       title: const PoppinsMediumText(text: "Women white and red dress",fontSize: 14,color: AppColors.textColor,height: 2,),
       subtitle: _richTextWidget(),
       trailing: InkWell(
-         onTap: (){
-             Navigator.push(context, ScreenNavigation.createRoute(widget: const StockDetailScreen()));
-         },
+          onTap: (){
+            Navigator.push(context, ScreenNavigation.createRoute(widget: const StockDetailScreen()));
+          },
           child: AppImages.blueEyeIcon),
     );
   }

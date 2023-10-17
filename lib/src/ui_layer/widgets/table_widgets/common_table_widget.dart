@@ -44,10 +44,12 @@ class DataTableTopWidget extends StatelessWidget {
 }
 
 class DataTableItemWidget extends StatelessWidget {
-  const DataTableItemWidget({Key? key, this.srNo = 1, this.widget, this.nameText = "Women Wear"}) : super(key: key);
+  const DataTableItemWidget({Key? key, this.srNo = 1, this.widget, this.nameText = "Women Wear",  this.onEdit,  this.onDelete}) : super(key: key);
   final int srNo;
   final Widget? widget;
   final String nameText;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {

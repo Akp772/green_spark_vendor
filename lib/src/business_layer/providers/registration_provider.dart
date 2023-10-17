@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:green_spark_vendor/src/business_layer/localization/translations.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/base_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/repository/registration_repository.dart';
 import 'package:green_spark_vendor/src/data_layer/local_db/user_state_hive_helper.dart';
+import 'package:green_spark_vendor/src/data_layer/models/auth_models/SocialLoginRequestModel.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/change_password_request_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/forgot_password_request_model.dart';
 import 'package:green_spark_vendor/src/data_layer/models/auth_models/forgot_password_response_model.dart';
@@ -58,15 +61,16 @@ class RegistrationProvider extends BaseProvider {
   }
 
   /// resend otp for verifyEmail
-  Future<String?> signUp({required String email,required String password,required String mobileNumber}) async {
+  Future<String?> signUp(SignUpRequestModel setRequest) async {
     if (await checkInternet()) {
-      _setSignUpRequest(mobileNumber,email,password);
-      var response = await _registrationRepository.signUp(email: email, password: password, mobileNumber: mobileNumber);
+      var response = await _registrationRepository.signUp(setRequest);
       if (response is SignUpResponseModel) {
-        if(response.httpStatusCode==HttpResponseCode.created) {
+        if(response.httpStatusCode==HttpResponseCode.ok) {
+          UserStateHiveHelper.instance.logIn();
+          UserStateHiveHelper.instance.setAccessToken(response.context!.data!.token!);
           return HttpResponseType.success;
         }else{
-          return response.context != null ? response.context!.message : "Something went wrong";
+          return response.message ?? "Something went wrong";
         }
       } else {
         return getExceptionMessage(exceptionType: response.exceptionType);
@@ -78,16 +82,14 @@ class RegistrationProvider extends BaseProvider {
 
   Future<String?> login({required String email,required String password}) async {
     if (await checkInternet()) {
-      var response = await _registrationRepository.login(email,password);
+      var response = await _registrationRepository.login(_setLoginRequest(email,password));
       if (response is LoginResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
           UserStateHiveHelper.instance.logIn();
-          UserStateHiveHelper.instance.setAccessToken(response.context!.success!.token!);
+          UserStateHiveHelper.instance.setAccessToken(response.context!.data!.token!);
           return HttpResponseType.success;
-        }else if(response.httpStatusCode ==HttpResponseCode.accepted){
-          return HttpResponseType.failed;
         }else{
-          return response.context != null ? response.context!.message : "Something went wrong";
+          return response.message ?? "Something went wrong";
         }
       } else {
         return getExceptionMessage(exceptionType: response.exceptionType);
@@ -95,6 +97,18 @@ class RegistrationProvider extends BaseProvider {
     } else {
       return AppLocalizations.current.getSocketExceptionMessage;
     }
+  }
+
+  SignInRequestModel _setLoginRequest(String userID,String password){
+    SignInRequestModel signInRequestModel = SignInRequestModel()
+        ..authProvider = ''
+        ..deviceType = ''
+        ..fcmToken = ''
+        ..deviceType = Platform.isAndroid ? 'Android' : 'iOS'
+        ..deviceId = ''
+        ..userId = userID
+        ..password = password;
+    return signInRequestModel;
   }
 
   Future<String?> forgotPassword({required String email,required String password}) async {
@@ -165,13 +179,6 @@ class RegistrationProvider extends BaseProvider {
     } else {
       return AppLocalizations.current.getSocketExceptionMessage;
     }
-  }
-
-
-  void _setSignUpRequest(String phoneNumber,String email,String password){
-    _signUpRequestModel.phoneNo = phoneNumber;
-    _signUpRequestModel.email = email;
-    _signUpRequestModel.password = password;
   }
 
 }

@@ -1,28 +1,28 @@
-class AllProductsResponseModel {
+class StocksWithoutVariantResponseModel {
   int? httpStatusCode;
   bool? status;
   Context? context;
   String? timestamp;
   String? message;
 
-  AllProductsResponseModel(
+  StocksWithoutVariantResponseModel(
       {this.httpStatusCode,
         this.status,
         this.context,
         this.timestamp,
         this.message});
 
-  AllProductsResponseModel.fromJson(Map<String, dynamic> json) {
+  StocksWithoutVariantResponseModel.fromJson(Map<String, dynamic> json) {
     httpStatusCode = json['http_status_code'];
     status = json['status'];
     context =
-    json['context'] != null ? new Context.fromJson(json['context']) : null;
+    json['context'] != null ? Context.fromJson(json['context']) : null;
     timestamp = json['timestamp'];
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['http_status_code'] = httpStatusCode;
     data['status'] = status;
     if (context != null) {
@@ -43,13 +43,13 @@ class Context {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -58,6 +58,78 @@ class Context {
 }
 
 class Data {
+  int? id;
+  String? pId;
+  String? image;
+  String? sku;
+  String? stockQty;
+  String? purchasePrice;
+  String? price;
+  String? offerPrice;
+  String? createdBy;
+  String? updatedBy;
+  Null? isDeleted;
+  String? createdAt;
+  String? updatedAt;
+  Product? product;
+
+  Data(
+      {this.id,
+        this.pId,
+        this.image,
+        this.sku,
+        this.stockQty,
+        this.purchasePrice,
+        this.price,
+        this.offerPrice,
+        this.createdBy,
+        this.updatedBy,
+        this.isDeleted,
+        this.createdAt,
+        this.updatedAt,
+        this.product});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    pId = json['p_id'];
+    image = json['image'];
+    sku = json['sku'];
+    stockQty = json['stock_qty'];
+    purchasePrice = json['purchase_price'];
+    price = json['price'];
+    offerPrice = json['offer_price'];
+    createdBy = json['created_by'];
+    updatedBy = json['updated_by'];
+    isDeleted = json['is_deleted'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    product =
+    json['product'] != null ? Product.fromJson(json['product']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['p_id'] = pId;
+    data['image'] = image;
+    data['sku'] = sku;
+    data['stock_qty'] = stockQty;
+    data['purchase_price'] = purchasePrice;
+    data['price'] = price;
+    data['offer_price'] = offerPrice;
+    data['created_by'] = createdBy;
+    data['updated_by'] = updatedBy;
+    data['is_deleted'] = isDeleted;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (product != null) {
+      data['product'] = product!.toJson();
+    }
+    return data;
+  }
+}
+
+class Product {
   int? id;
   String? name;
   String? status;
@@ -83,7 +155,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  Product(
       {this.id,
         this.name,
         this.status,
@@ -109,7 +181,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     status = json['status'];
@@ -137,7 +209,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
     data['status'] = status;

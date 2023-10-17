@@ -1,4 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/auth_screens/sign_up_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/home_screens/home_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/common_component/app_logo_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:green_spark_vendor/src/app.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
@@ -49,10 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
         backgroundColor: AppColors.appMainColor,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: AppImages.backIcon,
-        ),
+        leading: const SizedBox(),
         title: const PoppinsBoldText(text: 'Sign In',color: AppColors.whiteColor, fontSize: 18,),
       ),
       body: _mainWidget(),
@@ -67,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Column(
               children: [
                 AppStyles.sbHeight30,
-                AppImages.redAppLogo,
+                const AppLogoWidget(isWhite: false,),
                 AppStyles.sbHeight55,
                 _commonLabelAndTextFieldWidget("Email ID/Phone Number",_emailController,"Enter your mail ID",i_0,(value){}),
                 AppStyles.sbHeight30,
@@ -76,6 +79,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 _bottomRowWidget(),
                 AppStyles.sbHeight30,
                 _continueButton(),
+                AppStyles.sbHeight30,
+                _bottomTextWidget(),
               ],
             ),
           ),
@@ -101,6 +106,28 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {});
   }
 
+  Widget _bottomTextWidget(){
+    return  RichText(
+      text:   TextSpan(
+        children: [
+          const TextSpan(
+            text: "Don’t have an account? ",
+            style: TextStyle(
+              color: AppColors.textColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+            ),
+          ),
+          TextSpan(
+              recognizer: TapGestureRecognizer()
+              ..onTap=(){
+                navigatorKey.currentState!.pushReplacement(ScreenNavigation.createRoute(widget: const SignUpScreen()));
+              },
+              text: 'Sign Up', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w700,)),
+        ],
+      ),
+    );
+  }
 
   Widget _commonLabelAndTextFieldWidget(String labelText,TextEditingController controller,String hintText,int type,Function(String) onChange){
     return  Column(
@@ -179,7 +206,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
   
   Widget _continueButton(){
-    return CommonAppButton(text: "continue", onTap: (){
+    return CommonAppButton(text: "Sign In", onTap: (){
       _checkValidation();
       if(emailErr.isEmpty && passwordErr.isEmpty) {
         _handleTap(i_0);
@@ -192,9 +219,7 @@ class _SignInScreenState extends State<SignInScreen> {
     String? res = await _registrationProvider!.login(email: _emailController.text, password: _passwordController.text,);
     Loader.close(context);
     if(res == HttpResponseType.success){
-      navigatorKey.currentState!.pop();
-      navigatorKey.currentState!.pop();
-      if(type==i_1)navigatorKey.currentState!.pop();
+      Navigator.pushAndRemoveUntil(context, ScreenNavigation.createRoute(widget: const HomeScreen()), (route) => false);
     }else if(res == HttpResponseType.failed){
       _onFailed();
     }else{

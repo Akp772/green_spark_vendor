@@ -18,13 +18,62 @@ class HomeRepository {
   final String _tag = "HomeRepository: ";
   Map<String, dynamic>? _responseBody;
 
-  /// get all category
   Future<dynamic> getAllCategory() async {
     try {
       BaseApiResponseModel response = await AppNetwork().request(
-        url: ApiConstant.getAllCategory,
+        url: ApiConstant.getAllCatalogueProducts,
         requestType: HttpRequestMethods.get,
-        headerIncluded: false,
+        headerIncluded: true,
+      );
+
+      LogHelper.logData(_tag + response.data.toString());
+      if (response.data != null) {
+        _responseBody =
+            jsonDecode((response.data.toString()));
+        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
+        //         (data) {
+        return CategoryResponseModel.fromJson(_responseBody!);
+        // });
+      } else {
+        return ApiResponseModel(exceptionType: response.exceptionType);
+      }
+    } catch (e) {
+      LogHelper.logError(_tag + e.toString());
+      return ApiResponseModel(exceptionType: ExceptionType.parseException);
+    }
+  }
+
+  Future<dynamic> getAddToCartList() async {
+    try {
+      BaseApiResponseModel response = await AppNetwork().request(
+        url: ApiConstant.getCustomerCart,
+        requestType: HttpRequestMethods.get,
+        headerIncluded: true,
+      );
+
+      LogHelper.logData(_tag + response.data.toString());
+      if (response.data != null) {
+        _responseBody =
+            jsonDecode((response.data.toString()));
+        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
+        //         (data) {
+        return CategoryResponseModel.fromJson(_responseBody!);
+        // });
+      } else {
+        return ApiResponseModel(exceptionType: response.exceptionType);
+      }
+    } catch (e) {
+      LogHelper.logError(_tag + e.toString());
+      return ApiResponseModel(exceptionType: ExceptionType.parseException);
+    }
+  }
+
+  Future<dynamic> getAddToWishList() async {
+    try {
+      BaseApiResponseModel response = await AppNetwork().request(
+        url: ApiConstant.getCustomerWishlist,
+        requestType: HttpRequestMethods.get,
+        headerIncluded: true,
       );
 
       LogHelper.logData(_tag + response.data.toString());
@@ -94,30 +143,6 @@ class HomeRepository {
     }
   }
 
-  Future<dynamic> getAllProducts() async {
-    try {
-      BaseApiResponseModel response = await AppNetwork().request(
-        url: ApiConstant.getListings,
-        requestType: HttpRequestMethods.get,
-        headerIncluded: false,
-      );
-
-      LogHelper.logData(_tag + response.data.toString());
-      if (response.data != null) {
-        _responseBody =
-            jsonDecode((response.data.toString()));
-        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
-        //         (data) {
-        return ProductsListingResponseModel.fromJson(_responseBody!);
-        // });
-      } else {
-        return ApiResponseModel(exceptionType: response.exceptionType);
-      }
-    } catch (e) {
-      LogHelper.logError(_tag + e.toString());
-      return ApiResponseModel(exceptionType: ExceptionType.parseException);
-    }
-  }
 
 
 }

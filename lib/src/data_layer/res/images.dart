@@ -12,12 +12,64 @@ class AppImages {
     "assets/images/close_eye_icon.png",
   );
 
+  static Widget infoIcon = Image.asset(
+    "assets/images/info_icon.png",
+  );
+
   static Widget emailIcon = Image.asset(
     "assets/images/email_icon.png",
   );
 
   static Widget whiteEmailIcon = Image.asset(
     "assets/images/white_email_icon.png",
+  );
+
+ static Widget cancelationIcon = Image.asset(
+    "assets/images/cancelation_icon.png",
+  );
+
+ static Widget catalog = Image.asset(
+    "assets/images/catalog.png",
+  );
+
+ static Widget communication = Image.asset(
+    "assets/images/communication.png",
+  );
+
+ static Widget coupons = Image.asset(
+    "assets/images/coupons.png",
+  );
+
+ static Widget dispute = Image.asset(
+    "assets/images/dispute.png",
+  );
+
+ static Widget report = Image.asset(
+    "assets/images/report.png",
+  );
+
+ static Widget reviews = Image.asset(
+    "assets/images/reviews.png",
+  );
+
+ static Widget settings = Image.asset(
+    "assets/images/settings.png",
+  );
+
+ static Widget shipping = Image.asset(
+    "assets/images/shipping.png",
+  );
+
+ static Widget groupUserIcon = Image.asset(
+    "assets/images/group_user_icon.png",
+  );
+
+ static Widget supportIcon = Image.asset(
+    "assets/images/support_icon.png",
+  );
+
+ static Widget stocks = Image.asset(
+    "assets/images/stocks.png",
   );
 
   static Widget headphoneIcon = Image.asset(
@@ -275,9 +327,6 @@ class AppImages {
     "assets/images/calender_icon.svg",
   );
 
-  static Widget infoIcon = SvgPicture.asset(
-    "assets/images/info_icon.svg",
-  );
 
 
   static Widget crossTransIcon = SvgPicture.asset(

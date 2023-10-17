@@ -74,7 +74,7 @@ class AppNetwork {
         LogHelper.logData("$_debug$_postData ${jsonEncode(request)}");
       }
       if (request != null && isMultipartEnabled) {
-        LogHelper.logData("$_debug$_postData $request");
+        LogHelper.logData("$_debug$_postData ${jsonEncode(request)}");
       }
       if (queryParameter != null) {
         LogHelper.logData("$_debug$_paramData $queryParameter");
@@ -84,11 +84,23 @@ class AppNetwork {
       var options = Options(method: requestType);
       if ((headerIncluded != null && headerIncluded)) {
         LogHelper.logData("$_keyAuth => token $accessToken");
-        options.headers = {
-          _keyAuth: 'token $accessToken',
-          // _deviceId: "fdf",
-          // _local: "en"
-        };
+        if(await UserStateHiveHelper.instance.isLoggedIn()) {
+          options.headers = {
+            _keyAuth: 'Bearer $accessToken',
+            "client-key":"pPHWO0BO2LSpG3iscTBDEmIZWbyviojEEKpOgh3W",
+            "client-id": "996c0ca1-bbe1-436f-a7bf-92da87c9d507"
+          };
+        }else {
+          options.headers = {
+            "client-key": "pPHWO0BO2LSpG3iscTBDEmIZWbyviojEEKpOgh3W",
+            "client-id": "996c0ca1-bbe1-436f-a7bf-92da87c9d507"
+          };
+        }
+        // options.headers = {
+        //   _keyAuth: 'token $accessToken',
+        //   // _deviceId: "fdf",
+        //   // _local: "en"
+        // };
       }
       if (isMultipartEnabled) {
         options.contentType = "multipart/form-data";

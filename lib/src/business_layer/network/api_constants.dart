@@ -1,10 +1,9 @@
 class ApiConstant {
   /// Api URLS DEVELOPMENT
 
-  // static const urlDevServer = 'https://foodsteps.glocalview.in/api/';
-  // static const urlDevServer = 'https://fsqa.glocalview.in/api/';
   ///dev
-  static const urlDevServer = 'https://uapi.webdesignnoida.in/api/';
+  static const urlDevServer = 'https://testingbackend.suhaani.co.in/api/';
+  static const baseUrl = 'https://testingbackend.suhaani.co.in/';
 
   ///testing
   // static const urlDevServer = 'http://119.18.52.238:3003/api/';
@@ -24,8 +23,8 @@ class ApiConstant {
 
   static const String googleLink = "google.com";
   static const String refreshToken = "user/refreshtoken";
-  static const String signIn = "auth/login";
-  static const String signUp = "auth/register";
+  static const String signIn = "login";
+  static const String signUp = "vendor-register";
   static const String sendOTP = "otp/send";
   static const String verifyOtp = 'otp/verify';
   static const String getAccountTypes = 'user/getaccounttypes';
@@ -41,7 +40,16 @@ class ApiConstant {
   static const String setNewPassword = 'user/setpassword';
   static const String signOut = 'user/signout';
   //home
-  static const String getAllCategory = 'categories/list';
+  static const String getAllCatalogueProducts = 'product_all_data';
+  static const String getCustomerCart = 'get-customer-cart';
+  static const String getCustomerWishlist = 'get-customer-wishlist';
+  static const String getAllAttribute = 'get-attributes';
+  static const String addAllAttribute = 'store-attributes';
+
+  /// stocks
+  static const String stocksWithoutVariant = 'stocks/without_variant';
+  static const String stocksWithVariant = 'stocks/with_variant';
+
   static  String getSingleProduct(id) => 'listings/$id/get';
   static const String getTrending = 'listings/trending';
   static const String getListings = 'listings/';
