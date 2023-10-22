@@ -5,7 +5,9 @@ import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/cart_screen/added_to_cart_list_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/coupons_screen/coupons_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/orders_screen/order_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/shipping_screens/shipping_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/stocks_screen/total_stock_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/wishlist_screen/wishlist_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/bottom_nav_bar_widget.dart';
@@ -187,6 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(context, ScreenNavigation.createRoute(widget: const AddedToCartListScreen()));
     }else if(index == 7){
       Navigator.push(context, ScreenNavigation.createRoute(widget: const AddedToWishListScreen()));
+    }else if(index == 8){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const CouponsListScreen()));
+    }else if(index == 9){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const ShippingListScreen()));
     }
   }
 

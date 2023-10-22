@@ -51,6 +51,12 @@ class ApiConstant {
   static const String stocksWithVariant = 'stocks/with_variant';
 
   static  String getSingleProduct(id) => 'listings/$id/get';
+
+  static  String getAllCoupons(id) => 'get-all-vendor-coupon/$id';
+  static const String addCoupon = 'add-coupon';
+  static  String editCoupon(id) => 'edit-coupon/$id';
+
+
   static const String getTrending = 'listings/trending';
   static const String getListings = 'listings/';
   static const String setMasterclassVideoLogURL =

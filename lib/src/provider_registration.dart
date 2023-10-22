@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/base_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/catalogue_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/providers/coupons_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/home_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/providers/order_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/profile_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/registration_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/providers/shipping_provider.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/stocks_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -24,6 +27,12 @@ class RegisterProviders {
           create: (context) => CatalogueProvider(),
         ),ChangeNotifierProvider<StocksProvider>(
           create: (context) => StocksProvider(),
+        ),ChangeNotifierProvider<CouponsProvider>(
+          create: (context) => CouponsProvider(),
+        ),ChangeNotifierProvider<OrdersProvider>(
+          create: (context) => OrdersProvider(),
+        ),ChangeNotifierProvider<ShippingProvider>(
+          create: (context) => ShippingProvider(),
         ),
       ];
 }

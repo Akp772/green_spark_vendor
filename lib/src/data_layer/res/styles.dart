@@ -266,6 +266,7 @@ class AppStyles {
       EdgeInsets.only(left: d_20, right: d_20, top: d_10);
   static const EdgeInsets pdTB10 = EdgeInsets.only(bottom: d_10, top: d_10);
   static const EdgeInsets pdV11 = EdgeInsets.symmetric(vertical: d_11);
+  static const EdgeInsets pdV6 = EdgeInsets.symmetric(vertical: d_6);
   static const EdgeInsets pdV9 = EdgeInsets.symmetric(vertical: d_9);
   static const EdgeInsets pdV18 = EdgeInsets.symmetric(vertical: d_18);
   static const EdgeInsets pdH22V18 =

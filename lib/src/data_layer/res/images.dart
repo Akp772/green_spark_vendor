@@ -102,7 +102,7 @@ class AppImages {
   static Widget cartIcon =  Image.asset("assets/images/cart_icon.png");
   static Widget heartTextColorIcon =  Image.asset("assets/images/heart_icon.png",color: AppColors.textColor,);
   static Widget carDemoImg =  Image.asset("assets/images/car_demo_img.png");
-  static Widget profileDemoImh =  Image.asset("assets/images/profile_demo_imh.png");
+  static Widget profileDemoImh =  Image.asset("assets/images/profile.png");
   static Widget homeIcon =  Image.asset("assets/images/home_icon.png");
   static Widget chatIcon =  Image.asset("assets/images/chat_icon.png");
   static Widget cancelIcon =  Image.asset("assets/images/cancel_icon.png");
@@ -265,8 +265,8 @@ class AppImages {
     fit: BoxFit.cover,
   );
 
-  static Widget editIcon = SvgPicture.asset(
-    "assets/images/edit_icon.svg",
+  static Widget editIcon = Image.asset(
+    "assets/images/edit_icon.png",
     fit: BoxFit.cover,
   );
 

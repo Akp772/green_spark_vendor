@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:green_spark_vendor/src/business_layer/providers/order_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigation_helper.dart';
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/orders_screen/order_detail.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/app_bar_widget/app_bar_widget.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/app_buttons.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/app_text_fields.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/common_component/common_app_bar_widget.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/text_widget_helper.dart';
+import 'package:provider/provider.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
@@ -15,10 +23,26 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
 
   int index = 0;
+  final TextEditingController controller = TextEditingController();
+  OrdersProvider? ordersProvider;
+
+  @override
+  void initState() {
+    _getOrders();
+    super.initState();
+  }
+
+  void _getOrders(){
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async{
+      ordersProvider = Provider.of<OrdersProvider>(context,listen: false);
+      // ordersProvider.
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const AppBarWidget(title: "Orders"),
       body: _mainWidget(),
     );
   }
@@ -27,31 +51,86 @@ class _OrderScreenState extends State<OrderScreen> {
     return  SafeArea(
         child: Column(
           children: [
-            const CommonAppBarWidget(),
-            _topTabBarWidget(),
-            Expanded(child: _dataListWidget()),
+            _commonSearchWidget(),
+            _dataTabWidget(),
+            Expanded(
+                child: _dataListWidget()
+            ),
           ],
         )
     );
   }
 
-  Widget _dataListWidget(){
+  Widget _commonSearchWidget(){
+    return SizedBox(
+      height: 80,
+      child: Padding(
+        padding: AppStyles.pdH15,
+        child: Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 40,
+                child: SearchTextField(
+                    controller: controller,
+                    hint: "Search",
+                    fontColor: AppColors.textColor
+                ),
+              ),
+            ),
+            AppStyles.sbWidth10,
+            CommonAppButtonWithDynamicWidth(
+              padding:  const EdgeInsets.symmetric(horizontal: 8,vertical: 12),
+              text: "Create Order", onTap: (){
+              // Navigator.of(context).push(ScreenNavigation.createRoute(widget: const AddCouponScreen()));
+            },fontSize: 14,)
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _dataTabWidget(){
     return Container(
-      padding: AppStyles.pd20,
-      child: Column(
+      padding: AppStyles.pd15,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _tableTopWidget(),
-           AppStyles.sbHeight10,
-           Expanded(
-             child: ListView.separated(
-                 shrinkWrap: true,
-                 itemBuilder: (context,index) => _dataWidget(),
-                 separatorBuilder: (context,index) => AppStyles.sbHeight10,
-                 itemCount: 4),
-           )
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Sr. No",fontSize: 14)),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Order ID",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Order Date",fontSize: 14)),
+          AppStyles.sbWidth10,
+         Expanded(
+              flex: 2,
+              child: _commonBoldText("Status",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("View",fontSize: 14)),
         ],
       ),
     );
+  }
+
+
+  Widget _dataListWidget(){
+    return ListView.separated(
+        physics: const ClampingScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context,index) => Container(
+            color: index%2 != 0 ? AppColors.tableBgColor : AppColors.whiteColor,
+            padding: AppStyles.pdV10,
+            child: _dataWidget()),
+        separatorBuilder: (context,index) => AppStyles.sbHeight10,
+        itemCount: 4);
   }
 
   Widget _topTabBarWidget(){
@@ -98,33 +177,48 @@ class _OrderScreenState extends State<OrderScreen> {
         AppStyles.sbWidth10,
         _commonBoldText("Action"),
       ],
+
     );
   }
 
   Widget _dataWidget(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SubTitleText(text:"#383938",fontSize: 16,color: AppColors.lightBlueSecondColor,),
-        AppStyles.sbWidth10,
-        Container(
-          padding: AppStyles.pdH15V10,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: AppColors.lightBlueThirdColor
+    return Padding(
+      padding: AppStyles.pdH15,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Expanded(
+              flex: 1,
+              child: SubTitleText(text:"1",fontSize: 14,color: AppColors.textGreyColor,textAlign: TextAlign.center,)),
+          const Expanded(
+              flex: 3,
+              child: SubTitleText(text:"2352",fontSize: 14,color: AppColors.textGreyColor,textAlign: TextAlign.center)),
+          const Expanded(
+              flex: 3,
+              child: SubTitleText(text:"i phone 15",fontSize: 14,color: AppColors.textGreyColor,textAlign: TextAlign.center)),
+          Expanded(
+            flex: 3,
+            child: Container(
+              padding: AppStyles.pd6,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: AppColors.lightBlueThirdColor
+              ),
+              child: _commonBoldText("Pending",fontSize: 14,color: AppColors.whiteColor),
+            ),
           ),
-          child: _commonBoldText("Pending",fontSize: 14,color: AppColors.whiteColor),
-        ),
-        AppStyles.sbWidth10,
-        Row(
-          children: [
-            AppImages.blueEyeIcon,
-            AppStyles.sbWidth5,
-            AppImages.deleteIcon,
-          ],
-        )
-      ],
+          InkWell(
+            onTap: (){
+              Navigator.push(context, ScreenNavigation.createRoute(widget: const OrderDetailsScreen()));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: AppImages.blueEyeIcon,
+            ),
+          )
+        ],
+      ),
     );
   }
 

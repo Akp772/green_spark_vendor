@@ -6,8 +6,10 @@ import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/text_widget_helper.dart';
 
 class DataTableTopWidget extends StatelessWidget {
-  const DataTableTopWidget({Key? key, this.firstHeading = "Image"}) : super(key: key);
+  const DataTableTopWidget({Key? key,
+    this.firstHeading = "Image", this.secondHeading = "Name"}) : super(key: key);
   final String firstHeading;
+  final String secondHeading;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,54 @@ class DataTableTopWidget extends StatelessWidget {
           Expanded(
               flex: 2,
               child: _commonBoldText("Sr. No")),
-          AppStyles.sbWidth10,
+          // AppStyles.sbWidth10,
           Expanded(
               flex: 2,
               child: _commonBoldText(firstHeading)),
           AppStyles.sbWidth10,
           Expanded(
               flex: 3,
-              child: _commonBoldText("Name")),
+              child: _commonBoldText(secondHeading)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action")),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,);
+  }
+
+}
+
+class CouponDataTableTopWidget extends StatelessWidget {
+  const CouponDataTableTopWidget({Key? key,
+    this.firstHeading = "Image", this.secondHeading = "Name"}) : super(key: key);
+  final String firstHeading;
+  final String secondHeading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH20V16,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Sr. No")),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText(firstHeading)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText(secondHeading)),
           AppStyles.sbWidth10,
           Expanded(
               flex: 2,
@@ -99,6 +141,73 @@ class DataTableItemWidget extends StatelessWidget {
 
 }
 
+class CouponDataTableItemWidget extends StatelessWidget {
+  const CouponDataTableItemWidget({Key? key, this.srNo = 1, this.widget, this.nameText = "Women Wear",  this.onEdit,  this.onDelete, this.onView}) : super(key: key);
+  final int srNo;
+  final Widget? widget;
+  final String nameText;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
+  final VoidCallback? onView;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH20V12,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AppStyles.sbWidth10,
+           Expanded(
+              flex: 1,
+              child: SubTitleText(text: srNo.toString(),fontSize: 14,color: AppColors.textColor,)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: widget??const SizedBox.shrink()
+          ),
+          AppStyles.sbWidth20,
+           Expanded(
+              flex: 2,
+              child: SubTitleText(text: nameText,fontSize: 14,color: AppColors.textColor,)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: onView,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: SizedBox(
+                          height: 15,
+                          child: AppImages.blueEyeIcon),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onEdit,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: SizedBox(
+                          height: 15,
+                          child: AppImages.editIcon),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onDelete,
+                    child: SizedBox(
+                        height: 20,
+                        child: AppImages.redDeleteIcon),
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
+  }
+
+}
+
 class DividerWidget extends StatelessWidget {
   const DividerWidget({Key? key, this.color = AppColors.textColor, this.height = 0.5}) : super(key: key);
   final Color color;
@@ -119,3 +228,145 @@ class DividerWidget extends StatelessWidget {
   }
 }
 
+class ShippingDataTableTopWidget extends StatelessWidget {
+  const ShippingDataTableTopWidget({Key? key,
+    this.firstHeading = "Image", this.secondHeading = "Name"}) : super(key: key);
+  final String firstHeading;
+  final String secondHeading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH20V16,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Country")),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Shipping Rates")),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action")),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,);
+  }
+
+}
+
+class CarrierDataTableTopWidget extends StatelessWidget {
+  const CarrierDataTableTopWidget({Key? key,
+    this.firstHeading = "Image", this.secondHeading = "Name"}) : super(key: key);
+  final String firstHeading;
+  final String secondHeading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH20V16,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Sr. No")),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Name")),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Status")),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action")),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,);
+  }
+
+}
+
+class CarrierDataTableItemWidget extends StatelessWidget {
+  const CarrierDataTableItemWidget({Key? key, this.srNo = 1, this.widget, this.nameText = "Women Wear",  this.onEdit,  this.onDelete, this.onView}) : super(key: key);
+  final int srNo;
+  final Widget? widget;
+  final String nameText;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
+  final VoidCallback? onView;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH20V12,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 1,
+              child: SubTitleText(text: srNo.toString(),fontSize: 14,color: AppColors.textColor,)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: SubTitleText(text: nameText,fontSize: 14,color: AppColors.textColor,)),
+          AppStyles.sbWidth20,
+          Expanded(
+              flex: 2,
+              child: widget??const SizedBox.shrink()
+          ),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: onView,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: SizedBox(
+                          height: 15,
+                          child: AppImages.blueEyeIcon),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onEdit,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: SizedBox(
+                          height: 15,
+                          child: AppImages.editIcon),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onDelete,
+                    child: SizedBox(
+                        height: 20,
+                        child: AppImages.redDeleteIcon),
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
+  }
+
+}

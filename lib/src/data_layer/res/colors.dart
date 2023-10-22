@@ -14,6 +14,7 @@ class AppColors {
   static const Color leftOverBgColor = Color.fromRGBO(167, 222, 124, 1);
 
   static const Color uploadBgColor = Color.fromRGBO(129, 162, 250, 1);
+  static const Color tableBgColor = Color.fromRGBO(220, 224, 255, 1);
   static const Color lightBlueColor = Color.fromRGBO(233, 241, 255, 1);
   static const Color otpFillColor = Color.fromRGBO(206, 49, 38, 0.2);
   static const Color highlightedBlack = Color.fromRGBO(38, 38, 38, 1);

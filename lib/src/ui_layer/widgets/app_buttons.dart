@@ -27,11 +27,12 @@ class CommonAppButton extends StatelessWidget {
 }
 
 class CommonAppButtonWithDynamicWidth extends StatelessWidget {
-  const CommonAppButtonWithDynamicWidth({Key? key, required this.text, required this.onTap, this.fontSize = 18, this.padding = AppStyles.pdH8V10}) : super(key: key);
+  const CommonAppButtonWithDynamicWidth({Key? key, required this.text, required this.onTap, this.fontSize = 18, this.padding = AppStyles.pdH8V10, this.buttonColor = AppColors.appMainColor}) : super(key: key);
   final String text;
   final VoidCallback onTap;
   final double fontSize;
   final EdgeInsets padding;
+  final Color buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class CommonAppButtonWithDynamicWidth extends StatelessWidget {
       child: Container(
         padding: padding,
         decoration: BoxDecoration(
-          color: AppColors.appMainColor,
+          color: buttonColor,
           borderRadius: BorderRadius.circular(d_4),
         ),
         child: PoppinsBoldText(text: text,fontSize: fontSize,color: AppColors.whiteColor,textAlign: TextAlign.center,),
