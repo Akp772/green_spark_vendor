@@ -1,3 +1,4 @@
+import 'package:dio/src/form_data.dart';
 import 'package:green_spark_vendor/src/business_layer/localization/translations.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
@@ -45,6 +46,23 @@ class CatalogueProvider extends BaseProvider {
           return HttpResponseType.success;
         }else{
           return "Something went wrong";
+        }
+      } else {
+        return getExceptionMessage(exceptionType: response.exceptionType);
+      }
+    } else {
+      return AppLocalizations.current.getSocketExceptionMessage;
+    }
+  }
+
+  Future<String?> addProducts(FormData formData) async {
+    if (await checkInternet()) {
+      var response = await _catalogueRepository.addProducts(formData);
+      if (response is AddAttributeResponseModel) {
+        if(response.httpStatusCode==HttpResponseCode.ok) {
+          return HttpResponseType.success;
+        }else{
+          return response.message ?? "Something went wrong";
         }
       } else {
         return getExceptionMessage(exceptionType: response.exceptionType);

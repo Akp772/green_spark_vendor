@@ -35,12 +35,13 @@ class _OrderScreenState extends State<OrderScreen> {
   void _getOrders(){
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) async{
       ordersProvider = Provider.of<OrdersProvider>(context,listen: false);
-      // ordersProvider.
+      ordersProvider!.getAllOrders();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    ordersProvider = Provider.of<OrdersProvider>(context,listen: true);
     return Scaffold(
       appBar: const AppBarWidget(title: "Orders"),
       body: _mainWidget(),

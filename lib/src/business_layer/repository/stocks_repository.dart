@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/src/form_data.dart';
 import 'package:green_spark_vendor/src/business_layer/network/api_constants.dart';
 import 'package:green_spark_vendor/src/business_layer/network/app_network.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
@@ -29,6 +30,60 @@ class StocksRepository {
       BaseApiResponseModel response = await AppNetwork().request(
         url: ApiConstant.stocksWithoutVariant,
         requestType: HttpRequestMethods.post,
+        headerIncluded: true,
+      );
+
+      LogHelper.logData(_tag + response.data.toString());
+      if (response.data != null) {
+        _responseBody =
+            jsonDecode((response.data.toString()));
+        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
+        //         (data) {
+        return StocksWithoutVariantResponseModel.fromJson(_responseBody!);
+        // });
+      } else {
+        return ApiResponseModel(exceptionType: response.exceptionType);
+      }
+    } catch (e) {
+      LogHelper.logError(_tag + e.toString());
+      return ApiResponseModel(exceptionType: ExceptionType.parseException);
+    }
+  }
+
+  Future<dynamic> addStocksWithoutVariant(FormData formData) async {
+    try {
+      BaseApiResponseModel response = await AppNetwork().request(
+        url: ApiConstant.addStocksWithoutVariant,
+        requestType: HttpRequestMethods.post,
+        request: formData,
+        isMultipartEnabled: true,
+        headerIncluded: true,
+      );
+
+      LogHelper.logData(_tag + response.data.toString());
+      if (response.data != null) {
+        _responseBody =
+            jsonDecode((response.data.toString()));
+        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
+        //         (data) {
+        return StocksWithoutVariantResponseModel.fromJson(_responseBody!);
+        // });
+      } else {
+        return ApiResponseModel(exceptionType: response.exceptionType);
+      }
+    } catch (e) {
+      LogHelper.logError(_tag + e.toString());
+      return ApiResponseModel(exceptionType: ExceptionType.parseException);
+    }
+  }
+
+  Future<dynamic> addStocksWithVariant(FormData formData) async {
+    try {
+      BaseApiResponseModel response = await AppNetwork().request(
+        url: ApiConstant.addStocksWithVariant,
+        requestType: HttpRequestMethods.post,
+        request: formData,
+        isMultipartEnabled: true,
         headerIncluded: true,
       );
 

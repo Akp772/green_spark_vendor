@@ -1,3 +1,4 @@
+import 'package:dio/src/form_data.dart';
 import 'package:green_spark_vendor/src/business_layer/localization/translations.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
 import 'package:green_spark_vendor/src/business_layer/network/request_response_type.dart';
@@ -22,6 +23,44 @@ class StocksProvider extends BaseProvider {
   Future<String?> getStocksWithoutVariant() async {
     if (await checkInternet()) {
       var response = await _repository.getStocksWithoutVariant();
+      if (response is StocksWithoutVariantResponseModel) {
+        if(response.httpStatusCode==HttpResponseCode.ok) {
+          stocksWithoutVariantResponseModel = response;
+          notifyListeners();
+          return HttpResponseType.success;
+        }else{
+          return "Something went wrong";
+        }
+      } else {
+        return getExceptionMessage(exceptionType: response.exceptionType);
+      }
+    } else {
+      return AppLocalizations.current.getSocketExceptionMessage;
+    }
+  }
+
+  Future<String?> addStocksWithoutVariant(FormData formData) async {
+    if (await checkInternet()) {
+      var response = await _repository.addStocksWithoutVariant(formData);
+      if (response is StocksWithoutVariantResponseModel) {
+        if(response.httpStatusCode==HttpResponseCode.ok) {
+          stocksWithoutVariantResponseModel = response;
+          notifyListeners();
+          return HttpResponseType.success;
+        }else{
+          return "Something went wrong";
+        }
+      } else {
+        return getExceptionMessage(exceptionType: response.exceptionType);
+      }
+    } else {
+      return AppLocalizations.current.getSocketExceptionMessage;
+    }
+  }
+
+  Future<String?> addStocksWithVariant(FormData formData) async {
+    if (await checkInternet()) {
+      var response = await _repository.addStocksWithVariant(formData);
       if (response is StocksWithoutVariantResponseModel) {
         if(response.httpStatusCode==HttpResponseCode.ok) {
           stocksWithoutVariantResponseModel = response;

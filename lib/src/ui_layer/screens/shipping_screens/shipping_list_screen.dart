@@ -4,10 +4,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:green_spark_vendor/src/app.dart';
 import 'package:green_spark_vendor/src/business_layer/network/api_constants.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/stocks_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigation_helper.dart';
 import 'package:green_spark_vendor/src/data_layer/models/stocks_model/stocks_without_variant_response_model.dart';
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/shipping_screens/add_carrier.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_buttons.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_text_fields.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/common_component/common_app_bar_widget.dart';
@@ -38,7 +40,7 @@ class _ShippingListScreenState extends State<ShippingListScreen> {
   void _getStocksWithoutVariant(){
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       stocksProvider = Provider.of<StocksProvider>(context,listen: false);
-      stocksProvider!.getStocksWithoutVariant();
+      // stocksProvider!.getStocksWithoutVariant();
     });
   }
 
@@ -233,7 +235,9 @@ class _ShippingListScreenState extends State<ShippingListScreen> {
             AppStyles.sbWidth10,
             CommonAppButtonWithDynamicWidth(
               padding:  const EdgeInsets.symmetric(horizontal: 8,vertical: 12),
-              text: "Add New", onTap: (){},fontSize: 14,)
+              text: "Add New", onTap: (){
+                Navigator.push(context, ScreenNavigation.createRoute(widget: const AddCarrierScreen(isView: false,)));
+            },fontSize: 14,)
           ],
         ),
       ),

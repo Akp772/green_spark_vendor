@@ -41,6 +41,7 @@ class ApiConstant {
   static const String signOut = 'user/signout';
   //home
   static const String getAllCatalogueProducts = 'product_all_data';
+  static const String addProduct = 'Product_add';
   static const String getCustomerCart = 'get-customer-cart';
   static const String getCustomerWishlist = 'get-customer-wishlist';
   static const String getAllAttribute = 'get-attributes';
@@ -48,12 +49,15 @@ class ApiConstant {
 
   /// stocks
   static const String stocksWithoutVariant = 'stocks/without_variant';
+  static const String addStocksWithoutVariant = 'stocks/add-stock';
+  static const String addStocksWithVariant = 'stocks/add-stock-Variants';
   static const String stocksWithVariant = 'stocks/with_variant';
 
   static  String getSingleProduct(id) => 'listings/$id/get';
 
   static  String getAllCoupons(id) => 'get-all-vendor-coupon/$id';
   static const String addCoupon = 'add-coupon';
+  static const String getOrders = 'order';
   static  String editCoupon(id) => 'edit-coupon/$id';
 
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/src/form_data.dart';
 import 'package:green_spark_vendor/src/business_layer/network/api_constants.dart';
 import 'package:green_spark_vendor/src/business_layer/network/app_network.dart';
 import 'package:green_spark_vendor/src/business_layer/network/http_response_code.dart';
@@ -73,6 +74,31 @@ class CatalogueRepository {
     }
   }
 
+  Future<dynamic> addProducts(FormData formData) async {
+    try {
+      BaseApiResponseModel response = await AppNetwork().request(
+        url: ApiConstant.addProduct,
+        requestType: HttpRequestMethods.post,
+        request: formData,
+        isMultipartEnabled: true,
+        headerIncluded: true,
+      );
+
+      LogHelper.logData(_tag + response.data.toString());
+      if (response.data != null) {
+        _responseBody =
+            jsonDecode((response.data.toString()));
+        return AddAttributeResponseModel.fromJson(_responseBody!);
+        // });
+      } else {
+        return ApiResponseModel(exceptionType: response.exceptionType);
+      }
+    } catch (e) {
+      LogHelper.logError(_tag + e.toString());
+      return ApiResponseModel(exceptionType: ExceptionType.parseException);
+    }
+  }
+
   Future<dynamic> addAllAttribute(AddAttributeRequestModel value) async {
     try {
       BaseApiResponseModel response = await AppNetwork().request(
@@ -115,56 +141,6 @@ class CatalogueRepository {
         // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
         //         (data) {
         return AddAttributeResponseModel.fromJson(_responseBody!);
-        // });
-      } else {
-        return ApiResponseModel(exceptionType: response.exceptionType);
-      }
-    } catch (e) {
-      LogHelper.logError(_tag + e.toString());
-      return ApiResponseModel(exceptionType: ExceptionType.parseException);
-    }
-  }
-
-  Future<dynamic> getSingleProductDetails(id) async {
-    try {
-      BaseApiResponseModel response = await AppNetwork().request(
-        url: ApiConstant.getSingleProduct(id),
-        requestType: HttpRequestMethods.get,
-        headerIncluded: true,
-      );
-
-      LogHelper.logData(_tag + response.data.toString());
-      if (response.data != null) {
-        _responseBody =
-            jsonDecode((response.data.toString()));
-        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
-        //         (data) {
-        return SingleProductResponseModel.fromJson(_responseBody!);
-        // });
-      } else {
-        return ApiResponseModel(exceptionType: response.exceptionType);
-      }
-    } catch (e) {
-      LogHelper.logError(_tag + e.toString());
-      return ApiResponseModel(exceptionType: ExceptionType.parseException);
-    }
-  }
-
-  Future<dynamic> getAllTrading() async {
-    try {
-      BaseApiResponseModel response = await AppNetwork().request(
-        url: ApiConstant.getTrending,
-        requestType: HttpRequestMethods.get,
-        headerIncluded: false,
-      );
-
-      LogHelper.logData(_tag + response.data.toString());
-      if (response.data != null) {
-        _responseBody =
-            jsonDecode((response.data.toString()));
-        // return ApiResponseModel<EmptyDataResponseModel>.fromJson(_responseBody!,
-        //         (data) {
-        return TradingResponseModel.fromJson(_responseBody!);
         // });
       } else {
         return ApiResponseModel(exceptionType: response.exceptionType);

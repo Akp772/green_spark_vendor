@@ -13,6 +13,7 @@ import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/catalogue_screens/add_attribute.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/catalogue_screens/add_product.dart';
+import 'package:green_spark_vendor/src/ui_layer/widgets/app_bar_widget/app_bar_widget.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_buttons.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_dialog_widgets/app_dialogs.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_text_fields.dart';
@@ -58,6 +59,7 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
   Widget build(BuildContext context) {
     catalogueProvider = Provider.of<CatalogueProvider>(context,listen: true);
     return Scaffold(
+      appBar: const AppBarWidget(title: 'Catalogue',),
       body: _mainWidget(context),
     );
   }
@@ -66,7 +68,6 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
     return SafeArea(
         child: Column(
           children: [
-            const CommonAppBarWidget(title: "Catalogue",isNotification: true),
              _topTabBarWidget(),
             _commonSearchWidget(),
             DataTableTopWidget(firstHeading: tabIndex==0?"Image":"Order",),
@@ -150,7 +151,7 @@ class _CatalogueScreenState extends State<CatalogueScreen> {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: tabIndex==type ? AppColors.appMainColor : AppColors.whiteColor,
+              color: tabIndex==type ? AppColors.appMainColor.withOpacity(0.7) : AppColors.whiteColor,
               border: Border.all(color: AppColors.appMainColor,width: 1)
           ),
           padding: AppStyles.pdH16V8,

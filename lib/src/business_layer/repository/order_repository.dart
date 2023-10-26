@@ -24,7 +24,7 @@ class OrdersRepository {
   Future<dynamic> getAllOrders() async {
     try {
       BaseApiResponseModel response = await AppNetwork().request(
-        url: ApiConstant.getAllCoupons(5),
+        url: ApiConstant.getOrders,
         requestType: HttpRequestMethods.get,
         headerIncluded: true,
       );

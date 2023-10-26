@@ -3,10 +3,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:green_spark_vendor/src/app.dart';
 import 'package:green_spark_vendor/src/business_layer/network/api_constants.dart';
 import 'package:green_spark_vendor/src/business_layer/providers/stocks_provider.dart';
+import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigation_helper.dart';
 import 'package:green_spark_vendor/src/data_layer/models/stocks_model/stocks_without_variant_response_model.dart';
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/stocks_screen/product_search_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_buttons.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/app_text_fields.dart';
 import 'package:green_spark_vendor/src/ui_layer/widgets/common_component/common_app_bar_widget.dart';
@@ -183,7 +185,11 @@ class _TotalStockScreenState extends State<TotalStockScreen> {
             AppStyles.sbWidth10,
             CommonAppButtonWithDynamicWidth(
               padding:  const EdgeInsets.symmetric(horizontal: 8,vertical: 12),
-              text: "Add Inventory", onTap: (){},fontSize: 14,)
+              text: "Add Inventory", onTap: (){
+                Navigator.of(context).push(ScreenNavigation.createRoute(widget:
+                   ProductSearchScreen(title: 'Add inventory ${tabIndex ==0 ?"without":"with"} variant',)
+                ));
+            },fontSize: 14,)
           ],
         ),
       ),

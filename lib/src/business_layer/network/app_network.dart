@@ -74,7 +74,7 @@ class AppNetwork {
         LogHelper.logData("$_debug$_postData ${jsonEncode(request)}");
       }
       if (request != null && isMultipartEnabled) {
-        LogHelper.logData("$_debug$_postData ${jsonEncode(request)}");
+        LogHelper.logData("$_debug$_postData ${(request)}");
       }
       if (queryParameter != null) {
         LogHelper.logData("$_debug$_paramData $queryParameter");

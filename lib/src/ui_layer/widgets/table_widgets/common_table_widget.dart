@@ -45,6 +45,163 @@ class DataTableTopWidget extends StatelessWidget {
 
 }
 
+class CancellationDataTableTopWidget extends StatelessWidget {
+  const CancellationDataTableTopWidget({Key? key,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH15V11,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 1,
+              child: _commonBoldText("#",fontSize: 14)),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Order",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Customer",fontSize: 14)),
+          AppStyles.sbWidth10,
+         Expanded(
+              flex: 3,
+              child: _commonBoldText("Grand total",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action",fontSize: 14)),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,);
+  }
+
+}
+
+class CustomerDataTableTopWidget extends StatelessWidget {
+  const CustomerDataTableTopWidget({Key? key,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH15V11,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 1,
+              child: _commonBoldText("#",fontSize: 14)),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Image",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("User name",fontSize: 14)),
+          AppStyles.sbWidth10,
+         Expanded(
+              flex: 3,
+              child: _commonBoldText("Nickname",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action",fontSize: 14)),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,textAlign: TextAlign.center,);
+  }
+
+}
+
+class ReviewsDataTableTopWidget extends StatelessWidget {
+  const ReviewsDataTableTopWidget({Key? key,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH16V20,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 1,
+              child: _commonBoldText("#",fontSize: 14)),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Product",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Image",fontSize: 14)),
+          AppStyles.sbWidth10,
+         Expanded(
+              flex: 3,
+              child: _commonBoldText("Rating",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 2,
+              child: _commonBoldText("Action",fontSize: 14)),
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,textAlign: TextAlign.center,);
+  }
+
+}
+
+class ProductReviewsDataTableTopWidget extends StatelessWidget {
+  const ProductReviewsDataTableTopWidget({Key? key,}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: AppStyles.pdH16V20,
+      color: AppColors.lightGreyColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Customer",fontSize: 14)),
+          // AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Rating",fontSize: 14)),
+          AppStyles.sbWidth10,
+          Expanded(
+              flex: 3,
+              child: _commonBoldText("Comment",fontSize: 14)),
+          AppStyles.sbWidth10,
+        ],
+      ),
+    );
+  }
+
+  Widget _commonBoldText(String text,{double fontSize = 16,Color color = AppColors.textGreyColor,TextAlign textAlign = TextAlign.left}){
+    return PoppinsSemiBoldText(text: text, fontSize: fontSize,color: color,textAlign: textAlign,);
+  }
+
+}
+
 class CouponDataTableTopWidget extends StatelessWidget {
   const CouponDataTableTopWidget({Key? key,
     this.firstHeading = "Image", this.secondHeading = "Name"}) : super(key: key);

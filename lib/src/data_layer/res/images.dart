@@ -133,8 +133,8 @@ class AppImages {
   static Widget qualityIcon =  Image.asset("assets/images/quality_icon.png");
   static Widget cart2Icon =  Image.asset("assets/images/cart_2_icon.png");
   static Widget dashboardIcon =  Image.asset("assets/images/dashboard.png");
-  static Widget disputeIcon =  Image.asset("assets/images/dispute_icon.png");
-  static Widget message =  Image.asset("assets/images/message.png");
+  static Widget disputeIcon =  Image.asset("assets/images/dispute.png");
+  static Widget message =  Image.asset("assets/images/messages.png");
   static Widget wishlistIcon =  Image.asset("assets/images/wishlist_icon.png");
   static Widget orderIcon =  Image.asset("assets/images/order.png");
   static Widget catalogIcon =  Image.asset("assets/images/catalog.png");
@@ -147,6 +147,8 @@ class AppImages {
   static Widget paymentsIcons =  Image.asset("assets/images/payments.png");
   static Widget customerIcon =  Image.asset("assets/images/customer_icon.png");
   static Widget vehicleIcon =  Image.asset("assets/images/vehicle_icon.png");
+  static Widget shopIcon =  Image.asset("assets/images/shop_icon.png");
+  static Widget notepadIcon =  Image.asset("assets/images/notepad_icon.png");
 
   static Widget saleSVGIcon = SvgPicture.asset(
     "assets/images/sale.svg",
@@ -198,11 +200,18 @@ class AppImages {
     fit: BoxFit.cover,
     color: AppColors.unselectedBottomBar,
   );
+
   static Widget uploadIconActive = SvgPicture.asset(
     "assets/images/upload_icon.svg",
     fit: BoxFit.cover,
     color: Colors.black,
   );
+
+  static Widget taxIcon = Image.asset(
+    "assets/images/tax_icon.png",
+    fit: BoxFit.cover,
+  );
+
   static Widget chatFilledIcon = SizedBox(
     child: SvgPicture.asset(
       "assets/images/msg_icon.svg",
@@ -384,8 +393,8 @@ class AppImages {
     "assets/images/equipments_guide.svg",
   );
 
-  static Widget settingIcon = SvgPicture.asset(
-    "assets/images/setting_icon.svg",
+  static Widget settingIcon = Image.asset(
+    "assets/images/settings.png",
   );
   static Widget foodMenuIcon = Image.asset(
     "assets/images/food_menu_icon.png",

@@ -4,9 +4,13 @@ import 'package:green_spark_vendor/src/business_layer/util/helper/screen_navigat
 import 'package:green_spark_vendor/src/data_layer/res/colors.dart';
 import 'package:green_spark_vendor/src/data_layer/res/images.dart';
 import 'package:green_spark_vendor/src/data_layer/res/styles.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/cancellation_screens/cancellation_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/cart_screen/added_to_cart_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/coupons_screen/coupons_list_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/customer_screens/customer_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/orders_screen/order_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/reviews_screens/reviews_list_screen.dart';
+import 'package:green_spark_vendor/src/ui_layer/screens/settings_screen/setting_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/shipping_screens/shipping_list_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/stocks_screen/total_stock_screen.dart';
 import 'package:green_spark_vendor/src/ui_layer/screens/wishlist_screen/wishlist_screen.dart';
@@ -185,6 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(context, ScreenNavigation.createRoute(widget: const OrderScreen()));
     }else if(index == 2){
       Navigator.push(context, ScreenNavigation.createRoute(widget: const TotalStockScreen()));
+    }else if(index == 5){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const SettingScreen()));
     }else if(index == 6){
       Navigator.push(context, ScreenNavigation.createRoute(widget: const AddedToCartListScreen()));
     }else if(index == 7){
@@ -193,6 +199,12 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(context, ScreenNavigation.createRoute(widget: const CouponsListScreen()));
     }else if(index == 9){
       Navigator.push(context, ScreenNavigation.createRoute(widget: const ShippingListScreen()));
+    }else if(index == 10){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const CancellationScreen()));
+    }else if(index == 11){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const CustomerListScreen()));
+    }else if(index == 14){
+      Navigator.push(context, ScreenNavigation.createRoute(widget: const ReviewsListScreen()));
     }
   }
 
